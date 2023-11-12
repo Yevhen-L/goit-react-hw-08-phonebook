@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   requestContacts,
-  requestaddContact,
-  requestdeleteContact,
+  requestAddContact,
+  requestDeleteContact,
 } from 'Services/Api';
 
 const initialState = {
@@ -25,7 +25,7 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contactData, { dispatch }) => {
     try {
-      const data = await requestaddContact(contactData);
+      const data = await requestAddContact(contactData);
       dispatch(fetchContacts());
       return data;
     } catch (error) {
@@ -38,7 +38,7 @@ export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (contactId, { dispatch }) => {
     try {
-      await requestdeleteContact(contactId);
+      await requestDeleteContact(contactId);
       dispatch(fetchContacts());
       return contactId;
     } catch (error) {
