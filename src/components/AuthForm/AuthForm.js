@@ -177,6 +177,11 @@ export const AuthForm = ({ title }) => {
                   color="primary"
                   type="submit"
                   disabled={!!errors.email || !password}
+                  style={{
+                    fontSize: '24px',
+                    color: 'rgba(31, 143, 77)',
+                    backgroundColor: 'rgba(252, 202, 205, 0.9)',
+                  }}
                 >
                   {title === 'Register' ? 'Register' : 'Login'}
                 </Button>

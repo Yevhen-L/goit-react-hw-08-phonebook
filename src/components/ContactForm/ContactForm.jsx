@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
+import style from './ContactForm.module.css';
 
 import {
   useAddContactMutation,
@@ -55,7 +56,7 @@ export const ContactForm = () => {
   };
 
   return (
-    <Box textAlign="center">
+    <Box className={style.Boxes} textAlign="center">
       <Typography
         style={{
           fontSize: '40px',

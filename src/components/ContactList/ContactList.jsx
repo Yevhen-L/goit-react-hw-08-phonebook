@@ -5,6 +5,8 @@ import { ContactItem } from '../ContactItem/ContactItem';
 import { useFilter } from 'hooks/filterHook';
 import { useGetContactsQuery } from 'redux/contactsSlice';
 import { useMemo } from 'react';
+import style from './ContactList.module.css';
+import { Filter } from '../Filter/Filter';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor:
@@ -29,12 +31,14 @@ export const ContactsList = () => {
 
   return (
     <Box
+      className={style.Boxes}
       display="flex"
       justifyContent="center"
       alignItems="center"
       textAlign="center"
       sx={{ flexGrow: 1 }}
     >
+      <Filter />
       <StyledPaper
         sx={{
           my: 1,
