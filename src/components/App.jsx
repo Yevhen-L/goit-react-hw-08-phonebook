@@ -2,15 +2,15 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCurrentUser } from 'Redux/auth/authOperations';
-import PublicRoute from '../Routes/PublicRoute';
-import PrivateRoute from '../Routes/PrivateRoute';
+// import PublicRoute from '../Routes/PublicRoute';
+// import PrivateRoute from '../Routes/PrivateRoute';
 
 const HomeView = lazy(() => import('../Views/HomeView'));
 const ContactsView = lazy(() => import('../Views/ContactsView'));
 const RegisterView = lazy(() => import('../Views/RegisterView'));
 const LoginView = lazy(() => import('../Views/LoginView'));
-// const PublicRoute = lazy(() => import('../Routes/PublicRoute'));
-// const PrivateRoute = lazy(() => import('../Routes/PrivateRoute'));
+const PublicRoute = lazy(() => import('../Routes/PublicRoute'));
+const PrivateRoute = lazy(() => import('../Routes/PrivateRoute'));
 
 export const App = () => {
   const dispatch = useDispatch();
