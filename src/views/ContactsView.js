@@ -10,8 +10,10 @@ const ContactsView = () => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      // backgroundColor="rgb(205, 243, 255);"
       paddingBottom="250px"
+      backgroundSize="cover"
+      backgroundPosition="center"
+      backgroundRepeat="no-repeat"
     >
       <ContactForm />
       <ContactsList />
