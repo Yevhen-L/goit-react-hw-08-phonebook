@@ -19,14 +19,12 @@ const authPersistConfig = {
   storage,
   whitelist: ['token'],
 };
-
 const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, userSlice.reducer),
     [contactsApi.reducerPath]: contactsApi.reducer,
     filter: filterReducer,
   },
-
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
