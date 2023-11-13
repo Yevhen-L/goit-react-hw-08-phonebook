@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getUserEmail } from 'redux/auth/authSelectors';
-import { logout } from 'redux/auth/authOperations';
+import { getUserEmail } from 'Redux/auth/authSelectors';
+import { logout } from 'Redux/auth/authOperations';
 
 export const UserMenu = () => {
   const userEmail = useSelector(getUserEmail);

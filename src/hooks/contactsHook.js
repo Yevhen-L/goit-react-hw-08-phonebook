@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { contactsActions } from 'redux/contacts';
-import { getContact } from 'redux/auth/authApi';
+import { contactsActions } from 'edux/contacts';
+import { getContact } from 'Redux/auth/authApi';
 
 export const useContacts = () => {
   const dispatch = useDispatch();

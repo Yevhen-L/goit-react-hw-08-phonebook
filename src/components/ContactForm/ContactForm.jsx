@@ -8,7 +8,7 @@ import style from './ContactForm.module.css';
 import {
   useAddContactMutation,
   useGetContactsQuery,
-} from 'redux/contactsSlice';
+} from 'Redux/contactsSlice';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');

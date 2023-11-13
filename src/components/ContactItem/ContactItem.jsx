@@ -3,7 +3,7 @@ import { ListItemText, ListItem } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { useDeleteContactMutation } from 'redux/contactsSlice';
+import { useDeleteContactMutation } from 'Redux/contactsSlice';
 
 export const ContactItem = ({ name, number, id }) => {
   const [deleteContact, { isLoading }] = useDeleteContactMutation();

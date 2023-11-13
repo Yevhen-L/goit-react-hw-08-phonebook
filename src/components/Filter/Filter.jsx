@@ -1,5 +1,5 @@
 import { Box, TextField, Typography } from '@mui/material';
-import { useFilter } from '../../hooks/filterHook';
+import { useFilter } from '../../Hooks/filterHook';
 
 export const Filter = () => {
   const { filter, changeFilter } = useFilter();
