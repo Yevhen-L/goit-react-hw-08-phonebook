@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getLoggedIn } from 'Redux/auth/authSelectors';
+import { getLoggedIn } from 'reduxes/auth/authSelectors';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 
 const linkStyle = {

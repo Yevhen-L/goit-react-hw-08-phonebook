@@ -11,7 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import filterReducer from './filterSlice';
-import { userSlice } from '../Redux/auth/authSlice';
+import { userSlice } from './auth/authSlice';
 import { contactsApi } from './contactsSlice';
 
 const authPersistConfig = {
