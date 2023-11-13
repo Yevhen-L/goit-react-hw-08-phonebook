@@ -5,10 +5,10 @@ import { fetchCurrentUser } from 'Redux/auth/authOperations';
 // import PublicRoute from '../Routes/PublicRoute';
 // import PrivateRoute from '../Routes/PrivateRoute';
 
-const HomeView = lazy(() => import('../Views/HomeView'));
-const ContactsView = lazy(() => import('../Views/ContactsView'));
-const RegisterView = lazy(() => import('../Views/RegisterView'));
-const LoginView = lazy(() => import('../Views/LoginView'));
+const HomeView = lazy(() => import('../views/HomeView'));
+const ContactsView = lazy(() => import('../views/ContactsView'));
+const RegisterView = lazy(() => import('../views/RegisterView'));
+const LoginView = lazy(() => import('../views/LoginView'));
 
 const PublicRoute = lazy(() => import('../routes/PublicRoute'));
 const PrivateRoute = lazy(() => import('../routes/PrivateRoute'));

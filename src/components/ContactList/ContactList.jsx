@@ -2,7 +2,7 @@ import { Grid, List, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { ContactItem } from '../ContactItem/ContactItem';
-import { useFilter } from 'Hooks/filterHook';
+import { useFilter } from 'hooks/filterHook';
 import { useGetContactsQuery } from 'Redux/contactsSlice';
 import { useMemo } from 'react';
 import style from './ContactList.module.css';
