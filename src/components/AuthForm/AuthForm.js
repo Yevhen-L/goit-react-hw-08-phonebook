@@ -9,7 +9,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 
 import style from './RegisterForm.module.css';
-import { login, register } from 'reduxes/auth/authOperations';
+import { login, register } from 'Redux/auth/authOperations';
 
 const validateName = value => {
   let error;

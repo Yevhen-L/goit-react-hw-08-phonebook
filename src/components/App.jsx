@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchCurrentUser } from 'reduxes/auth/authOperations';
+import { fetchCurrentUser } from 'Redux/auth/authOperations';
 
 const HomeView = lazy(() => import('../Views/HomeView'));
 const ContactsView = lazy(() => import('../Views/ContactsView'));

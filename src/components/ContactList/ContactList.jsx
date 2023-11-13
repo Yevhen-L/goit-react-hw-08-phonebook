@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { ContactItem } from '../ContactItem/ContactItem';
 import { useFilter } from 'Hooks/filterHook';
-import { useGetContactsQuery } from 'reduxes/contactsSlice';
+import { useGetContactsQuery } from 'Redux/contactsSlice';
 import { useMemo } from 'react';
 import style from './ContactList.module.css';
 import { Filter } from '../Filter/Filter';

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Navigate, Outlet } from 'react-router-dom';
-import { getLoggedIn } from 'reduxes/auth/authSelectors';
+import { getLoggedIn } from 'Redux/auth/authSelectors';
 
 const PublicRoute = ({ restricted = false, redirectTo }) => {
   const isLoggedIn = useSelector(getLoggedIn);
