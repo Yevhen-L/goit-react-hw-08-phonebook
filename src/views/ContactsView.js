@@ -14,7 +14,6 @@ const ContactsView = () => {
       paddingBottom="250px"
     >
       <ContactForm />
-
       <ContactsList />
     </Box>
   );
