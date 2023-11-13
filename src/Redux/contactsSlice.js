@@ -1,104 +1,48 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  requestContacts,
-  requestAddContact,
-  requestDeleteContact,
-} from 'Services/Api';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const initialState = {
-  items: [],
-  isLoading: false,
-  error: null,
-  filter: '',
-};
+export const contactsApi = createApi({
+  reducerPath: 'contactsApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://connections-api.herokuapp.com',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
 
-export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
-  try {
-    const data = await requestContacts();
-    return data;
-  } catch (error) {
-    throw new Error('Failed to fetch contacts');
-  }
-});
-
-export const addContact = createAsyncThunk(
-  'contacts/addContact',
-  async (contactData, { dispatch }) => {
-    try {
-      const data = await requestAddContact(contactData);
-      dispatch(fetchContacts());
-      return data;
-    } catch (error) {
-      throw new Error('Failed to add a contact');
-    }
-  }
-);
-
-export const deleteContact = createAsyncThunk(
-  'contacts/deleteContact',
-  async (contactId, { dispatch }) => {
-    try {
-      await requestDeleteContact(contactId);
-      dispatch(fetchContacts());
-      return contactId;
-    } catch (error) {
-      throw new Error('Failed to delete a contact');
-    }
-  }
-);
-
-const contactsSlice = createSlice({
-  name: 'contacts',
-  initialState,
-  reducers: {
-    setFilter: (state, action) => {
-      state.filter = action.payload;
+      return headers;
     },
-  },
+  }),
 
-  extraReducers: builder => {
-    builder
-      .addCase(fetchContacts.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.items = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(fetchContacts.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
-      })
-      .addCase(addContact.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(addContact.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-        state.isLoading = false;
-      })
-      .addCase(addContact.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
-      })
-      .addCase(deleteContact.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(deleteContact.fulfilled, (state, action) => {
-        state.items = state.items.filter(
-          contact => contact.id !== action.payload
-        );
-        state.isLoading = false;
-      })
-      .addCase(deleteContact.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
-      });
-  },
+  tagTypes: ['Contact'],
+  endpoints: builder => ({
+    getContacts: builder.query({
+      query: () => '/contacts',
+      providesTags: ['Contact'],
+    }),
+
+    addContact: builder.mutation({
+      query: values => {
+        return {
+          url: '/contacts',
+          method: 'POST',
+          body: values,
+        };
+      },
+      invalidatesTags: ['Contact'],
+    }),
+    deleteContact: builder.mutation({
+      query: id => ({
+        url: `/contacts/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Contact'],
+    }),
+  }),
 });
 
-export const { setFilter } = contactsSlice.actions;
-
-export default contactsSlice.reducer;
+export const {
+  useGetContactsQuery,
+  useAddContactMutation,
+  useDeleteContactMutation,
+} = contactsApi;

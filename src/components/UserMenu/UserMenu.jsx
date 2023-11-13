@@ -1,21 +1,19 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from 'Redux/authSlice';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { getUserEmail } from 'redux/auth/authSelectors';
+import { logout } from 'redux/auth/authOperations';
 
-const UserMenu = () => {
+export const UserMenu = () => {
+  const userEmail = useSelector(getUserEmail);
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
 
   return (
-    <div>
-      <p>{user.email}</p>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <>
+      <Typography sx={{ mr: 2 }}>{userEmail ? userEmail : null}</Typography>
+      <Button onClick={() => dispatch(logout())} color="inherit">
+        Logout
+      </Button>
+    </>
   );
 };
-
-export default UserMenu;

@@ -1,78 +1,108 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
-import { selectContacts } from 'Redux/selector';
-import { addContact } from 'Redux/contactsSlice';
-import css from './contactform.module.css';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
-function ContactForm() {
-  const contacts = useSelector(selectContacts);
-  const [contact, setContact] = useState({
-    name: '',
-    phone: '',
-  });
-  const { name, phone } = contact;
-  const dispatch = useDispatch();
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'redux/contactsSlice';
 
-  const handleChange = event => {
-    setContact({
-      ...contact,
-      id: nanoid(),
-      [event.target.name]: event.target.value,
-    });
-  };
+export const ContactForm = () => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const { data: contacts } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const isDuplicate = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-    if (isDuplicate) {
-      alert('This contact already exists in the phone book!!');
+  const onAddContact = contact => {
+    if (contacts && contacts.some(item => item.name === contact.name)) {
+      alert(`${contact.name} is already in contacts`);
       return;
     }
+    addContact(contact);
+  };
 
-    dispatch(addContact(contact));
-    setContact({
-      name: '',
-      phone: '',
-    });
+  const onChangeInput = event => {
+    const { name, value } = event.target;
+    if (name === 'name') {
+      setName(value);
+    }
+    if (name === 'number') {
+      setNumber(value);
+    }
+  };
+
+  const onSubmitForm = event => {
+    event.preventDefault();
+
+    if (name && number) {
+      onAddContact({
+        name,
+        number,
+      });
+    } else {
+      alert('The number field and name are empty, fill them in!');
+    }
+
+    reset(event);
+  };
+
+  const reset = event => {
+    setName('');
+    setNumber('');
+    event.currentTarget.reset();
   };
 
   return (
-    <div className={css.inputBox}>
-      <h1 className={css.title}>Phonebook</h1>
-      <form className={css.inputForm} onSubmit={handleSubmit}>
-        <>
-          Name:
-          <input
-            type="text"
-            name="name"
-            // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            value={name}
-            onChange={handleChange}
-            required
-          />
-        </>
-        <>
-          Number:
-          <input
-            className={css.input}
-            type="text"
-            name="phone"
-            value={phone}
-            // pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
-            onChange={handleChange}
-            required
-          />
-        </>
-        <button className={css.contactsformtBtn} type="submit">
-          Add contact
-        </button>
-      </form>
-    </div>
+    <Box textAlign="center">
+      <Typography
+        style={{
+          fontSize: '40px',
+          fontWeight: 'bold',
+          lineHeight: '2.8',
+          marginBottom: '20px',
+        }}
+        variant="h3"
+      >
+        Phonebook
+      </Typography>
+      <Box
+        component="form"
+        display="flex"
+        justifyContent="center"
+        flexDirection="column"
+        sx={{
+          '& > :not(style)': { m: 1 },
+        }}
+        autoComplete="off"
+        onSubmit={onSubmitForm}
+      >
+        <TextField
+          sx={{ width: '50ch' }}
+          type="text"
+          name="name"
+          onChange={onChangeInput}
+          id="filled-basic"
+          label="Name"
+          variant="filled"
+          required
+        />
+        <TextField
+          sx={{ width: '50ch' }}
+          value={number}
+          type="tel"
+          name="number"
+          id="filled-basic"
+          label="Number"
+          variant="filled"
+          onChange={onChangeInput}
+          required
+        />
+        <Button disabled={!name || !number} type="submit">
+          Add Contact
+        </Button>
+      </Box>
+    </Box>
   );
-}
-
-export default ContactForm;
+};

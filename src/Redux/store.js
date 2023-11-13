@@ -1,34 +1,38 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import contactsReducer from './contactsSlice';
+import filterReducer from './filterSlice';
+import { contactsApi } from './contactsSlice';
+import { userSlice } from '../redux/auth/authSlice';
 
-const persistConfig = {
-  key: 'root',
+const authPersistConfig = {
+  key: 'auth',
   storage,
-  whitelist: ['contacts'],
+  whitelist: ['token'],
 };
 
-const persistedContactsReducer = persistReducer(persistConfig, contactsReducer);
-
-// Визначте loggerMiddleware або видаліть його, якщо вам не потрібен
-const loggerMiddleware = store => next => action => {
-  const result = next(action);
-  return result;
-};
-
-// Виправте ім'я змінної на persistedContactsReducer
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    contacts: persistedContactsReducer, // Зміни тут
+    auth: persistReducer(authPersistConfig, userSlice.reducer),
+    [contactsApi.reducerPath]: contactsApi.reducer,
+    filter: filterReducer,
   },
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoreActions: ['persist/PERSIST'],
-    },
-  }).concat(loggerMiddleware), // Додайте loggerMiddleware, якщо вам він потрібен
+
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(contactsApi.middleware),
 });
 
 export const persistor = persistStore(store);
-
-export default store;
