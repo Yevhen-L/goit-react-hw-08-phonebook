@@ -11,7 +11,7 @@ const Navigation = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/welcome">Home</Link>
           </li>
           {isAuthenticated ? (
             <>
